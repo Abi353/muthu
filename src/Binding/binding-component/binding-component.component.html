@@ -1,0 +1,132 @@
+<!-- <p>binding-component works!</p> -->
+<div class="chk">
+  <button (click)="backbutton()" class="bbtn mx-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+</svg>
+  </button>
+</div>
+<h2 class="d-flex align-item-center justify-content-center">{{ Name2 }}</h2>
+
+<button [disabled]="isbtndisable" class="btn btn-secondary btn-lg mx-2 my-2">Submit</button>
+
+<button (click)="chktheabvbtn()" class="btn btn-success">
+  {{ isbtndisable? 'Enable' : 'Disable' }} Submit Button
+</button>
+<br>
+<div class="d-flex align-item-center justify-content-center">
+  <label>Enter Your Name Here</label>
+  <input type="text" class="mx-2" [(ngModel)]="name" name="" id="">
+</div>
+
+<br>
+<h4 class="d-flex align-item-center justify-content-center">Twoway Binding - Enter Your Name : - {{ name }} &nbsp;!</h4>
+
+<h6 *ngIf="name" class="d-flex align-item-center justify-content-center">Hello {{ name }} i'm enabled now !</h6>
+
+
+<table class="table caption-top">
+  <caption>List of users</caption>
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of Users let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{user.fname}}</td>
+      <td>{{user.lname}}</td>
+      <td>{{user.Handle}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <h3>Signal</h3>
+
+  <input type="text" class="mx-2" [(ngModel)]="username">
+
+  <p>Name : {{username()}}</p>
+
+  <button (click)="greetPeople()" class="styled">Greet</button>
+
+  <ul class="my-1">
+    <li *ngFor="let greet of greetings">{{ greet }}</li>
+  </ul>
+</div>
+
+<div class="d-flex flex-column align-item-center justify-content-center">
+  <p class="mx-2 my-2 d-flex align-item-center justify-content-center">{{ calculation() }}</p>
+  <div class="d-flex  align-item-center justify-content-center">
+    <button (click)="increase()" class="css-button-3d--rose mx-2 my-2">+</button>
+    <button (click)="decrease()" class="css-button-3d--rose mx-2 my-2" [disabled]="increasevalue() === 0">-</button>
+  </div>
+
+</div>
+
+<h4 class="d-flex align-item-center justify-content-center">ng-container</h4>
+<ul class="user-list">
+  <ng-container *ngFor="let user of users">
+    <ng-container *ngIf="user.isActive">
+      <li class="user-item">
+        <strong>{{ user.name }}</strong> – {{ user.email }}
+      </li>
+    </ng-container>
+  </ng-container>
+</ul>
+
+<br>
+
+<div class="d-flex flex-column justify-content-center align-items-center text-center">
+  <h4>Ng If and Ng For and Ng Switch</h4>
+
+  <div *ngIf="userRole === 'admin'">Welcome, Admin!</div>
+  <div *ngIf="userRole !== 'admin'; else guestMessage">Welcome, User!</div>
+  <ng-template #guestMessage>
+    <div>Welcome, Guest!</div>
+  </ng-template>
+
+  <div [ngSwitch]="userRole">
+    <div *ngSwitchCase="'admin'">Admin Panel</div>
+    <div *ngSwitchCase="'editor'">Editor Panel</div>
+    <div *ngSwitchDefault>Guest View</div>
+  </div>
+</div>
+
+
+<br>
+
+<div class="d-flex flex-column justify-content-center align-items-center text-center">
+  <h4>Singal</h4>
+<ul *ngFor="let todo of todos() let i = index">
+  <li>{{todo.title}}</li> &nbsp; <button class="bttn" (click)="updatetodo(i)">{{todo.bool}}</button>
+</ul>
+
+<p>{{this.valu()}}</p>
+<button (click)="changesignal()" class="btn btn-info">Change Value</button>
+
+
+<div class="mx-2 my-2">{{message()}}</div>
+<input type="text" [ngModel]="name2()" class="mx-2 my-2" (ngModelChange)="name2.set('$event')">
+
+<div>
+  <button (click)="name2.set('Angular')" class="btn btn-secondary mx-2 my-2">Angular</button>
+  <button (click)="name2.set('Signal')" class="btn btn-secondary">Signal</button>
+</div>
+</div>
+
+
+<!-- <h2>Computed Signal Example</h2>
+    <div>
+      <label for="firstName">First Name:</label>
+      <input id="firstName" [(ngModel)]="firstName" />
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input id="lastName" [(ngModel)]="lastName" />
+    </div>
+    <p>Full Name (computed): {{ fullName() }}</p> -->

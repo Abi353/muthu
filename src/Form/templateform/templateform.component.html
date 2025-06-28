@@ -1,0 +1,83 @@
+<!-- <p>templateform works!</p> -->
+
+<div class="chk">
+    <button (click)="backbutton()" class="bbtn mx-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+        </svg>
+    </button>
+    <span class="">Template Driven Form</span>
+</div>
+
+<div class="container mx-2 my-2">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <form (ngSubmit)=" OnSubmit(demoform)" #demoform="ngForm">
+                <div class="row rown">
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <label for="firstname">Firstname</label>
+                        <input type="text" name="firstname" id="firstname" [(ngModel)]="userdata.firstname" required
+                            class="form-control" #firstname="ngModel">
+                        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                            Enter First Name
+                        </div>
+                    </div>
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <label for="lastname">Lastname</label>
+                        <input type="text" name="lastname" id="lastname" [(ngModel)]="userdata.lastname"
+                            class="form-control" required #lastname="ngModel">
+                        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                            Enter Last Name
+                        </div>
+                    </div>
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <label for="degree">Degree</label>
+                        <select name="degeree" id="degeree" class="form-control" [(ngModel)]="userdata.degeree" required
+                            #degeree="ngModel">
+                            <option *ngFor="let degeree of degereee" [value]="degeree">{{degeree}}</option>
+                        </select>
+                        <div *ngIf="degeree.invalid && (degeree.dirty || degeree.touched)" class="text-danger">
+                            Select Degeree
+                        </div>
+                    </div>
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" 
+                        [(ngModel)]="userdata.passwords.password"
+                        class="form-control" required minlength="6" #password="ngModel">
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                            Enter Password
+                        </div>
+
+                        <div *ngIf="password.errors?.['minlength'] && (password.dirty || password.touched)" class="text-danger">
+    Password must be at least {{ password.errors?.['minlength'].requiredLength }} characters long.
+    (You entered {{ password.errors?.['minlength'].actualLength }})
+  </div>
+                    </div>
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input type="password" id="confirmpassword" name="confirmpassword"
+                            [(ngModel)]="userdata.passwords.confirmpassword" required class="form-control"
+                            #confirmpassword="ngModel"
+                            [ngClass]="{'is-invalid': confirmpassword.touched && !passwordsMatch()}">
+                        <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)" class="text-danger">
+                            Enter Confirm Password
+                        </div>    
+                        <div *ngIf="confirmpassword.touched && !passwordsMatch()" class="text-danger">
+                            Passwords do not match
+                        </div>
+                    </div>
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-info">Register</button>
+                            <button class="btn btn-warning" (click)="reset(demoform)">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <p *ngIf="demoform.valid">{{demoform.value | json }}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="chk">
+    <button [routerLink]="'/reactiveform'" class="bbtn mx-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+        </svg>
+    </button>
+    <span class="">Simple Create and Read</span>
+</div>
+
+<h3 class="d-flex justify-content-center align-item-center">Student Entry Form</h3>
+
+
+<div class="container-fluid">
+    <form action="">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="row">
+                    <div class="form-group col-12 col-md-4">
+                        <label for="fulnam">Name</label>
+                        <input type="text" name="fulnam" id="fulnam" class="form-control" 
+                        [(ngModel)]="fulnam"/>
+                    </div>
+                    <div class="form-group col-12 col-md-2">
+                        <label for="eng">English</label>
+                        <input type="text" name="eng" maxlength="3" id="eng" class="form-control"
+                        [(ngModel)]="engInput"
+        (input)="onMarksInput('eng', $event)" />
+                    </div>
+                    <div class="form-group col-12 col-md-2">
+                        <label for="mat">Maths</label>
+                        <input type="text" name="mat" maxlength="3" id="mat" class="form-control"
+                        [(ngModel)]="matInput"
+        (input)="onMarksInput('mat', $event)" />
+                    </div>
+                    <div class="form-group col-12 col-md-2">
+                        <label for="cs">Cs</label>
+                        <input type="text" name="cs" maxlength="3" id="cs" class="form-control"
+                        [(ngModel)]="csInput"
+        (input)="onMarksInput('cs', $event)" />
+                    </div>
+                    <div class="form-group col-12 col-md-2">
+                        <label for="tot">Total</label>
+                        <input type="text" name="tot" maxlength="3" id="tot" [value]="tot()" class="form-control"
+                        disabled />
+                    </div>
+                </div>
+                <div class="row mt-4">
+    <div class="col-12">
+      <button class="btn btn-primary" (click)="addStudentResult()">
+        Add Result
+      </button>
+    </div>
+  </div>
+            </div>
+            <div class="row mt-4">
+    <div class="col-12">
+      <h2>Student Results</h2>
+      <ul class="list-group">
+        <li class="list-group-item" *ngIf="results.length === 0">
+          No results added yet.
+        </li>
+        <li class="list-group-item" *ngFor="let result of results()">
+          <strong>Name:</strong> {{ result.name }} |
+          <strong>English:</strong> {{ result.english }} |
+          <strong>Maths:</strong> {{ result.maths }} |
+          <strong>CS:</strong> {{ result.cs }} |
+          <strong>Total:</strong> {{ result.total }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Name</th>
+      <th scope="col">English</th>
+      <th scope="col">Math</th>
+      <th scope="col">Cs</th>
+      <th scope="col">Tot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let res of results(); let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{res.name}}</td>
+      <td>{{res.english}}</td>
+      <td>{{res.maths}}</td>
+      <td>{{res.cs}}</td>
+      <td>{{res.total}}</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+    </form>
+</div>

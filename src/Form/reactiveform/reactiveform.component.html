@@ -1,0 +1,86 @@
+<div class="chk">
+    <button [routerLink]="declarename" class="bbtn mx-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+        </svg>
+    </button>
+    <span class="">Reactive Form</span>
+</div>
+
+<div class="container-fluid">
+    <form [formGroup]="form" (ngSubmit)="OnSubmit()">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="row rown mt-2">
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="fulnam">Full Name</label>
+                        <input type="text" name="fulnam" id="fulnam" class="form-control" formControlName="fulnam"
+                            [class.error-field]="showErrors && form.get('fulnam')?.invalid" />
+                        <div *ngIf="(form.get('fulnam')?.touched || showErrors) && form.get('fulnam')?.invalid"
+                            class="text-danger">
+                            Full Name is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="usrnam">User Name</label>
+                        <input type="text" name="usrnam" id="usrnam" class="form-control" formControlName="usrnam"
+                            [class.error-field]="showErrors && form.get('usrnam')?.invalid" />
+                        <div *ngIf="(form.get('usrnam')?.touched || showErrors) && form.get('usrnam')?.invalid"
+                            class="text-danger">
+                            User Name is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" formControlName="email"
+                            [class.error-field]="showErrors && form.get('email')?.invalid" />
+                        <div *ngIf="(form.get('email')?.touched || showErrors) && form.get('email')?.invalid"
+                            class="text-danger">
+                            Email is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="usrnam">Password</label>
+                        <input type="password" name="paswrd" id="paswrd" class="form-control" formControlName="paswrd"
+                            [class.error-field]="showErrors && form.get('paswrd')?.invalid" />
+                        <div *ngIf="(form.get('paswrd')?.touched || showErrors) && form.get('paswrd')?.invalid"
+                            class="text-danger">
+                            Password is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="confipaswrd">Confirm Password</label>
+                        <input type="password" name="confipaswrd" id="confipaswrd" class="form-control"
+                            formControlName="confipaswrd"
+                            [class.error-field]="showErrors && form.get('confipaswrd')?.invalid" />
+                        <div *ngIf="(form.get('confipaswrd')?.touched || showErrors) && form.get('confipaswrd')?.invalid"
+                            class="text-danger">
+                            Confirm Password required.
+                        </div>
+                        <div *ngIf="form.errors?.['passwordMismatch'] && (form.get('confipaswrd')?.touched || showErrors)"
+                            class="text-danger">
+                            Passwords do not match.
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="chn form-group col-6 col-lg-6 col-md-6">
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-info">Submit</button>
+                            <button type="button" class="btn btn-warning" (click)="clear()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

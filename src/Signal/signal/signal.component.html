@@ -1,0 +1,42 @@
+<div class="chk">
+  <button (click)="backbutton()" class="bbtn mx-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+</svg>
+  </button>
+</div>
+<span class="d-flex align-item-center justify-content-center">Signal based table content</span>
+
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers()">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of studentWithTotal()">
+      <td>{{ student.name }}</td>
+      <td>{{ student.math }}</td>
+      <td>{{ student.science }}</td>
+      <td>{{ student.english }}</td>
+      <td>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <strong>{{ student.total }}</strong>
+    <input type="checkbox" [checked]="student.extra" disabled />
+  </div>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<span class="d-flex align-item-center justify-content-center my-3">Counter</span>
+
+<div class="d-flex align-item-center justify-content-center ">
+    <button class="btnn mx-2 my-2" (click)="decrement()" [disabled]="counter() <= 0">-</button>
+    <p class="mx-2 my-2 mt-3">{{counter()}}</p>
+    <button class="btnn mx-2 my-2" (click)="increment()">+</button>
+    <div [style.color]="spancolor()" class="d-flex flex-column align-item-center justify-content-center">
+        <span>Current value - {{counter()}}</span>
+    </div>
+    
+</div>
