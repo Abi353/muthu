@@ -1,0 +1,719 @@
+<!-- <a class="first" [routerLink]="routerble">Dashboard</a>
+<br>
+<a [routerLink]="['/AccountsEntrySL/cashTransferReceiver']">Cash Trasfer Request</a>
+<button class="btn btn-primary" (click)="navigate()">Cash Receiver Request</button>
+
+<h3>Country: {{ datas?.country }}</h3>
+<h4>Post Code: {{ datas?.['post code'] }}</h4>
+
+<h5>Places:</h5>
+<ul *ngIf="places.length > 0">
+  <li *ngFor="let place of places">
+    <strong>{{ place['place name'] }}</strong> — 
+    State: {{ place.state }} ({{ place['state abbreviation'] }}), 
+    Location: {{ place.latitude }}, {{ place.longitude }}
+  </li>
+</ul> -->
+
+<app-header Titleheader="{{SectionTitle}}" back="true" (BackClick)="back()"></app-header>
+
+@if(isSelect === "entryScreen"){
+<div class="mx-3">
+  <div class="container-fluid" *ngIf="viewScreen === false">
+    <form [formGroup]="entry">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12 col-ml-12 mt-2">
+        <div class="row">
+          <div class="gcardContainer">
+            <div class="form-group row">
+              <div class="d-flex flex-wrap">
+                <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+                  <div class="col-xl-12 col-12">
+                    <div class="row">
+                      <div class="col-xl-3 col-form-label">
+                        <!-- <p>{{currentVouchNo}}</p>
+                        <p>{{currentStatus}}</p> -->
+                        <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Cmp
+                          Name</label>
+                      </div>
+                      <div class="col-xl-8 mt-2">
+                        <input id="cmpname" value="{{aabname}}" class="form-control gInnerInput-11" readonly />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <fieldset [disabled]="headerForm" class="d-flex col-xl-8 p-0 flex-wrap">
+                  <div class="col-xl-6 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+                    <div class="col-xl-12 col-12">
+                      <div class="row">
+                        <div class="col-xl-3 col-form-label">
+                          <label for="finbok" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Fin
+                            Book</label>
+                        </div>
+                        <div class="col-xl-8 mt-2">
+                          <!-- <input type="text" class="gInnerInput-11" [matAutocomplete]="auto"
+                            (keydown)="keytab($event,'branch')" name="finbok" formControlName="finbok" id="finbook" />
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of finboknamelist | async" [value]="option">
+                              {{ option.FbName }}
+                            </mat-option>
+                          </mat-autocomplete> -->
+
+                          <input type="text" class="gInnerInput-11" (keydown)="keytab($event,'branch')" id="finbook"
+                            formControlName="finbok" autocomplete="off" [matAutocomplete]="finboknme">
+                          <mat-autocomplete #finboknme="matAutocomplete" class="gAutoCompleteContainer">
+                            <mat-option *ngFor="let data of finboknamelist" [value]="data.FbName" class="gSelectOption"
+                              (onSelectionChange)="ChangeChangeEvent($event,data,'finbok')">
+                              {{data.FbName}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xl-6 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2 d-flex align-items-center ">
+                    <div class="col-xl-12 col-12">
+                      <div class="row">
+                        <div class="col-xl-3 col-form-label">
+                          <label for="branch" class="gInputLable  col-sm-12 col-md-12 col-lg-12"
+                            for="cmpName">Branch</label>
+                        </div>
+                        <div class="col-xl-8 mt-2">
+                          <!-- <input type="text" class="gInnerInput-11" (keydown)="keytab($event,'searchBranch')"
+                            name="branch" formControlName="branch" id="branch" /> -->
+
+                          <input type="text" class="gInnerInput-11" (keydown)="keytab($event,'searchBranch')"
+                            id="branch" formControlName="branch" autocomplete="off" [matAutocomplete]="branchselect">
+                          <mat-autocomplete #branchselect="matAutocomplete" class="gAutoCompleteContainer">
+                            <mat-option *ngFor="let data of branchnamelist" [value]="data.brname" class="gSelectOption"
+                              (onSelectionChange)="ChangeChangeEvent($event,data,'branch')">
+                              {{data.brname}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="mt-2 gcardContainer row">
+      <form [formGroup]="entry1">
+        <!-- <div class="col-12 col-md-4 col-lg-3 my-2 d-flex flex-column gap-2">
+        </div> -->
+
+
+        <!-- <div class="col-12 col-md-4 col-lg-6 my-2 d-flex flex-column justify-content-center gap-2"> -->
+        <fieldset [disabled]="footerForm">
+          <div class="row d-flex justify-content-center">
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> To
+                  Branch</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <!-- <input type="text" id="searchBranch" formControlName="searchBranch" class="gInnerInput-11"
+                      aria-label="Number" (keydown)="keytab($event,'transferamt')"> -->
+                    <input type="text" class="gInnerInput-11" (keydown)="keytab($event,'transferamt')"
+                      id="searchBranch" formControlName="searchBranch" autocomplete="off"
+                      [matAutocomplete]="branchselect1">
+                    <mat-autocomplete #branchselect1="matAutocomplete" class="gAutoCompleteContainer">
+                      <mat-option *ngFor="let datas of branchnameTolist" [value]="datas.brname" class="gSelectOption"
+                        (onSelectionChange)="BranchEvent($event,searchBranch)">
+                        {{datas.brname}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Transfer
+                  Amount</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <input type="text" id="transferamt" maxlength="5" formControlName="transferamt" name="transferamt"
+                      class="gInnerInput-11" (keydown)="keytab($event,'cashcode')"
+                      (keypress)="allowOnlyNumbers($event)">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Cash Code</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <!-- <select class="gInnerInput-border" id="cashcode" (change)="ChangeCashCode($event)"
+                      formControlName="cashcode" name="cashcode" (keydown)="keytab($event,'sendmode')">
+                      <option *ngFor="let data of cashcode" class="gSelectOption" [value]="data.name">
+                        {{ data.name }}
+                      </option>
+                    </select> -->
+                    <!-- <input type="text" class="gInnerInput-11" (keydown)="keytab($event,'cashcode')" id="cashcode"
+                            formControlName="cashcode" autocomplete="off" [matAutocomplete]="branchselect">
+                          <mat-autocomplete #branchselect="matAutocomplete" class="gAutoCompleteContainer">
+                            <mat-option *ngFor="let data of branchnamelist" [value]="data.brname" class="gSelectOption"
+                              (onSelectionChange)="toBranchEvent($event,cashcode)">
+                              {{data.brname}}
+                            </mat-option>
+                          </mat-autocomplete> -->
+
+                    <input type="text" placeholder="CashCode" matInput formControlName="cashcode"
+                      [matAutocomplete]="cashcodeAuto1" id="cashcode" class="example-input  gInnerInput-11" />
+
+                    <mat-autocomplete #cashcodeAuto1="matAutocomplete">
+
+                      <!-- <mat-option *ngFor="let branch of branchnamelist | async" -->
+                      <mat-option *ngFor="let data of branchnamecashlist" [value]="data.AccCode + ' - ' + data.AccName"
+                        (optionSelected)="onCashCodeSelected($event.option.value)">
+                        <!-- <mat-option class="gSelectOption" [value]="cashcode.AccCode" 
+                                                        > -->
+                        {{ data.AccCode }} - {{ data.AccName }}
+
+                      </mat-option>
+
+                    </mat-autocomplete>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Send thru mode</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <select class="gInnerInput-border" id="sendmode" (change)="ChangeSendMode($event)"
+                      formControlName="sendmode" name="sendmode" (keydown)="keytab($event,'sndthrumod')">
+                      <option *ngFor="let data of sendmode" class="gSelectOption" [value]="data.name">
+                        {{ data.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Send thru person</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <input type="text" id="sndthrumod" name="sndthrumod" formControlName="sndthrumod"
+                      class="gInnerInput-11" aria-label="Number" (keydown)="keytab($event,'vehinodes')">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+
+            <!-- <div class="col-12 ">
+            <div class="row form-group ">
+              <label class="gInputLable col-sm-12 col-md-4 col-lg-4">Send thru person</label>
+              <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="gOuterInput ">
+                  <input type="text" id="sndthruper" name="sndthruper" formControlName="sndthruper"
+                    class="gInnerInput-11" aria-label="Number" (keydown)="keytab($event,'vehinodes')">
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Vehicle No / Description</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <input type="text" id="vehinodes" name="vehinodes" formControlName="vehinodes"
+                      class="gInnerInput-11" aria-label="Number" (keydown)="keytab($event,'authby')" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Authorised By</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    <input type="text" id="authby" name="authby" formControlName="authby" class="gInnerInput-11"
+                      aria-label="Number" (keydown)="keytab($event,'filebtn')">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3"></div>
+            <div class="col-6 ">
+              <div class="row form-group ">
+                <label class="gInputLable col-sm-12 col-md-4 col-lg-4"> Attachment</label>
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                  <div class="gOuterInput ">
+                    {{this.selectedFile?.name}}
+                    <input type="file" id="attachment" hidden #attachFileId name="attachment" class="gInnerInput-11"
+                      readonly (change)="onFileSelected($event)" (keydown)="keytab($event,'SaveButton')">
+                    <label for="" style="float: left;">{{attachment}}</label>
+                    <button type="button" class="gInputButton border border-0" id="filebtn"
+                      (click)="attachFileId.click()">
+                      <mat-icon>attach_file</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3"></div>
+
+          </div>
+        </fieldset>
+
+        <div class="d-flex col-12 gap-2 justify-content-center align-items-center my-2 row mx-1 mx-md-0">
+          @if(isEmpty === true && !isApproval) {
+          @if(currentStatus !== 'Approved' && currentStatus !== 'Deleted' && currentStatus !== 'Rejected') {
+          <button type="button" (click)="saveForm()" id="SaveButton" mat-button class="gSaveButton" matTooltip="Save">
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+          }
+
+          <button type="button" mat-button class="button gNormalButton" id="ViewButton" matTooltip="View"
+            (click)="viewButton()">
+            <mat-icon>remove_red_eye</mat-icon>
+            View
+          </button>
+
+          <button type="button" mat-button class="button gNormalButton " id="clearbtn" matTooltip="Clear"
+            (click)="clearall()">
+            <mat-icon>clear_all</mat-icon>
+            Clear
+          </button>
+          @if(isDelete === true) {
+          @if(currentStatus !== 'Approved' && currentStatus !== 'Deleted' && currentStatus !== 'Rejected') {
+          <button type="button" mat-button class="gDeleteButton me-2" id="deleteBtn" matTooltip="Delete"
+            (click)="updateStatus('Deleted', currentVouchNo)">
+            <mat-icon style="font-size: 20px;">delete</mat-icon>
+            Delete
+          </button>
+          }
+          }
+          } @else {
+
+          @if(isApproval || isEmpty === false) {
+          @if(currentStatus !== 'Approved' && currentStatus !== 'Deleted' && currentStatus !== 'Rejected') {
+          <button type="button" mat-button class="gSaveButton me-2" id="aprbtn" matTooltip="Approve"
+            (click)="updateStatus('Approved', currentVouchNo)">
+            <mat-icon style="font-size: 20px;">check</mat-icon> Approve
+          </button>
+          <button type="button" mat-button class="gDeleteButton me-2" id="rjtbtn" matTooltip="Reject"
+            (click)="updateStatus('Rejected', currentVouchNo)">
+            <mat-icon style="font-size: 20px;">cancel</mat-icon> Reject
+          </button>
+          }
+
+
+
+          }
+
+          }
+
+          @if(isFresh === true || isApproval) {
+          <button type="button" mat-button class="gSaveButton me-2" id="accPost" matTooltip="Account Posting">
+            <mat-icon style="font-size: 20px;">launch</mat-icon> Account Posting
+          </button>
+          }
+
+
+        </div>
+
+        <!-- </div> -->
+
+
+      </form>
+    </div>
+  </div>
+</div>
+} @else if (isSelect === "viewScreen") {
+<form [formGroup]="entry2">
+  <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12 col-ml-12 mt-2">
+    <div class="row mx-2">
+      <div class="gcardContainer">
+        <div class="form-group row">
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Cmp
+                    Name</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input id="cmpname" value="{{aabname}}" class="form-control gInnerInput-11" readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="finbok" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Fin
+                    Book</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input type="text" class="gInnerInput-11" name="finbok" formControlName="finacebok" id="finbook" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2 d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="branch" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Branch</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input type="text" class="gInnerInput-11" name="branch" formControlName="viewBranch" id="branch" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-4 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">From
+                    Date</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input type="date" id="fromDate" [formControl]="fromDate" formControlName="fromDate"
+                    class="datepicker-input mat-mdc-input-element gInnerInput-12 ng-untouched ng-pristine ng-valid" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">To Date</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input id="toDate" type="date" class="form-control gInnerInput-11" [formControl]="toDate"
+                    formControlName="toDate" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Status</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <select class="gInnerInput-border" id="viewStutas" (change)="ChangeStatus($event)"
+                    formControlName="viewStutas" name="viewStutas">
+                    <option *ngFor="let data of status" class="gSelectOption" [value]="data.name">
+                      {{ data.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-5 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Tran
+                    Type</label>
+                </div>
+                <div class="col-xl-7 mt-2">
+                  <select class="gInnerInput-border" id="trnType" (change)="ChangeTranType($event)"
+                    formControlName="trnType" name="trnType">
+                    <option *ngFor="let data of trantype" class="gSelectOption" [value]="data.name">
+                      {{ data.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-5 col-form-label">
+                  <button class="button1" (click)="approvedScreen()"><span>Approve</span></button>
+                </div>
+                <div class="col-xl-7 mt-2">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="gTableSection mx-1 mt-1">
+            <div class="gTableActionheaders">
+              <form novalidate="" role="search" class="search-form ml-3 ng-untouched ng-pristine ng-valid"><input
+                  type="search" name="Search" autocomplete="off" id="search"
+                  class="gSearchText ng-untouched ng-pristine ng-valid" ng-reflect-name="Search"></form>
+            </div>
+            <div class="gInnerTable" style="max-height: calc(100vh - 150px);">
+              <table id="viewTable" width="100%" class="gNormalTable-sm table">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th class="ng-star-inserted">Brcode</th>
+                    <th class="ng-star-inserted">Branch</th>
+                    <th>To Brcode</th>
+                    <th>To Branch</th>
+                    <th>Voucher Date</th>
+                    <th>Voucher No</th>
+                    <th>View</th>
+                    <th>DStatus</th>
+                    <th style="text-align: right;">Amt</th>
+                    <th>CreatedUsr</th>
+                    <th>CreatedTime</th>
+                    <th>ApprovedUser</th>
+                    <th>ApprovedTime</th>
+                    <th>If Reject (Reject Reason)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of allEntries;  let i = index">
+                    <td>{{row.SNo}}</td>
+                    <td></td>
+                    <td>{{row.entry?.branch}}</td>
+                    <td></td>
+                    <td>{{row.entry1?.searchBranch}}</td>
+                    <td>{{ row.entry?.ddatVou | date:'MMM d, y' }}</td>
+                    <td>{{row.vouchNo}}</td>
+                    <td>
+                      <i class="fa fa-hand-o-right" (click)="editContent(i,mainmenuSelceted,'viewSide')"></i>
+                    </td>
+                    <td>{{row.entry1?.status}}</td>
+                    <td>{{row.entry1?.transferamt}}</td>
+                    <td></td>
+                    <td>{{ row.entry?.ddatVou }}</td>
+                    <td></td>
+                    <td>{{ row.entry1?.approvedDate }}</td>
+                    <td></td>
+                  </tr>
+                  <tr class="ng-star-inserted" *ngIf="allEntries.length === 0">
+                    <td colspan="12" class="text-center">No record found.</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+}
+@else if (isSelect === "approveScreen") {
+<form [formGroup]="approvalForm">
+  <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-12 col-ml-12 mt-2">
+    <div class="row mx-2">
+      <div class="gcardContainer">
+        <div class="form-group row">
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Cmp
+                    Name</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input id="cmpname" value="{{aabname}}" class="form-control gInnerInput-11" readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="finbok" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Fin
+                    Book</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input type="text" class="gInnerInput-11" name="finbok" formControlName="finacebok" id="finbook" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2 d-flex align-items-center ">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="branch" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Branch</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input type="text" class="gInnerInput-11" name="branch" formControlName="viewBranch" id="branch" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-4 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">From
+                    Date</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input id="cmpname" type="date" formControlName="fromDate" class="form-control gInnerInput-11"
+                    readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">To Date</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <input id="cmpname" type="date" class="form-control gInnerInput-11" formControlName="toDate"
+                    readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-3 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Status</label>
+                </div>
+                <div class="col-xl-8 mt-2">
+                  <select class="gInnerInput-border" id="viewStutas" (change)="ChangeStatus($event)"
+                    formControlName="viewStutas" name="viewStutas">
+                    <option *ngFor="let data of status" class="gSelectOption" [value]="data.name">
+                      {{ data.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2 col-md-4 col-sm-12 col-12 col-ld-8 col-xs-2  d-flex align-items-center">
+            <div class="col-xl-12">
+              <div class="row">
+                <div class="col-xl-5 col-form-label">
+                  <label for="CmpName" class="gInputLable  col-sm-12 col-md-12 col-lg-12" for="cmpName">Tran
+                    Type</label>
+                </div>
+                <div class="col-xl-7 mt-2">
+                  <select class="gInnerInput-border" id="trnType" (change)="ChangeTranType($event)"
+                    formControlName="trnType" name="trnType">
+                    <option *ngFor="let data of trantype" class="gSelectOption" [value]="data.name">
+                      {{ data.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="gTableSection mx-1 mt-1">
+            <div class="gTableActionheaders">
+              <form novalidate="" role="search" class="search-form ml-3 ng-untouched ng-pristine ng-valid"><input
+                  type="search" name="Search" autocomplete="off" id="search"
+                  class="gSearchText ng-untouched ng-pristine ng-valid" ng-reflect-name="Search"></form>
+            </div>
+            <div class="gInnerTable" style="max-height: calc(100vh - 150px);">
+              <table id="viewTable" width="100%" class="gNormalTable-sm table">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th class="ng-star-inserted">Brcode</th>
+                    <th class="ng-star-inserted">Branch</th>
+                    <th>To Brcode</th>
+                    <th>To Branch</th>
+                    <th>Voucher Date</th>
+                    <th>Voucher No</th>
+                    <th>View</th>
+                    <th>DStatus</th>
+                    <th style="text-align: right;">Amt</th>
+                    <th>CreatedUsr</th>
+                    <th>CreatedTime</th>
+                    <th>ApprovedUser</th>
+                    <th>ApprovedTime</th>
+                    <th>If Reject (Reject Reason)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of allEntries;  let i = index">
+                    <td>{{row.SNo}}</td>
+                    <td></td>
+                    <td>{{row.entry?.branch}}</td>
+                    <td></td>
+                    <td>{{row.entry1?.searchBranch}}</td>
+                    <td>{{ row.entry?.ddatVou | date:'MMM d, y' }}</td>
+                    <td>{{row.vouchNo}}</td>
+                    <td>
+                      <i class="fa fa-hand-o-right" (click)="editContent(i,mainmenuSelceted,'approveSide')"></i>
+                    </td>
+                    <td>{{row.entry1?.status}}</td>
+                    <td>{{row.entry1?.transferamt}}</td>
+                    <td></td>
+                    <td>{{ row.entry?.ddatVou }}</td>
+                    <td></td>
+                    <td>{{ row.entry1?.approvedDate }}</td>
+                    <td></td>
+                  </tr>
+                  <tr class="ng-star-inserted" *ngIf="allEntries.length === 0">
+                    <td colspan="12" class="text-center">No record found.</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+}
